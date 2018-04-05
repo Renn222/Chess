@@ -82,6 +82,7 @@ public class PiecesDragAndDropListener implements MouseListener, MouseMotionList
     @Override
     public void mouseDragged(MouseEvent evt) 
     {
+    	System.out.println(evt.getPoint().x);
         if(this.dragPiece != null)
         {
         	if((evt.getPoint().y - this.dragOffsetY) > 100)
@@ -96,7 +97,9 @@ public class PiecesDragAndDropListener implements MouseListener, MouseMotionList
     }
 
     @Override
-    public void mouseClicked(MouseEvent arg0) {}
+    public void mouseClicked(MouseEvent arg0) {
+    	
+    }
 
     @Override
     public void mouseEntered(MouseEvent arg0) {}

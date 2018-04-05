@@ -47,24 +47,10 @@ public class Board extends JPanel
 
     public Board()
 	{
+    	
 		wp = new Piece[8];
     	bp = new Piece[8];
-        JFrame f = new JFrame();
-        content = f.getContentPane();
         
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        content.setLayout(new BorderLayout(0, 0));
-        
-        f.getContentPane().add(this, BorderLayout.CENTER);
-        this.setLayout(new GridLayout(8, 8, 0, 0));
-        f.setResizable(false);
-        f.setSize(800, 800);
-        f.setTitle("Chess");
-        getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));
-    	
-        // load and set background image
-        //URL urlBackgroundImg = getClass().getResource("/images/chessboard.jpg");
-        //this.imgBackground = new ImageIcon(urlBackgroundImg).getImage();
     	
     	// create and place pieces
         //
@@ -153,8 +139,6 @@ public class Board extends JPanel
 	            boardState[i][j] = tile;
 	        }
 	    }
-	    content.add(this);
-        f.setVisible(true);
 	}
 	
 	private Piece createAndAddPiece(int color, int type, int x, int y) 
