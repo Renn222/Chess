@@ -26,16 +26,10 @@ public class PiecesDragAndDropListener implements MouseListener
 
     @Override
     public void mousePressed(MouseEvent evt) 
-    {
-    	tile.select();
-    	
+    {    	
         if(tile.isPiece())
         {
-        	
-        }
-        else
-        {
-        	
+        	tile.select();
         }
     }
 

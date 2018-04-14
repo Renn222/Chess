@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -14,12 +16,14 @@ public class Tile extends JPanel implements Cloneable
 	private JLabel content;
 	private Piece piece;
 	int x,y;                             //is public because this is to be accessed by all the other class
-	public boolean isSelected=false;
-	private boolean ischeck=false;
+	public boolean isSelected = false;
+	private boolean ischeck = false;
+	private List<Tile> tileOptions = new ArrayList<Tile>();
 	
 	int colour;
-	int black = -1;
-	int white = 1;
+	private static final int WHITE = 0;
+    private static final int BLACK = 1;
+
 	
 	public Tile(int x, int y, Piece p)
 	{		
@@ -31,13 +35,13 @@ public class Tile extends JPanel implements Cloneable
 		if((x + y) % 2 == 0)
 		{
 			setBackground(new Color(128, 128, 128));
-			colour = black;
+			colour = BLACK;
 		}
 	
 		else
 		{
 			setBackground(Color.white);
-			colour = white;
+			colour = WHITE;
 		}
 	 
 		if(p!=null)
@@ -54,7 +58,6 @@ public class Tile extends JPanel implements Cloneable
 	{
 		piece=p;
 		ImageIcon img = p.getImageIcon();
-		//ImageIcon img = new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
 		content = new JLabel(img);
 		this.add(content);
 	}
@@ -94,21 +97,29 @@ public class Tile extends JPanel implements Cloneable
 			setBackground(new Color(143, 188, 143));
 			isSelected = true;
 			Game.isAnySelected = true;
+			
+			tileOptions = piece.getMoves();
 		}
 		
 	}
 	
 	public void deselect()
 	{
-		if(colour == black)
+		if(colour == BLACK)
 		{
 			setBackground(new Color(128, 128, 128));
 		}
-		else if(colour == white)
+		else if(colour == WHITE)
 		{
 			setBackground(Color.white);
 		}
-		isSelected = false;
+		
+		for(Tile x: tileOptions)
+		{
+			x.setBorder(null);
+		}
+		
+		isSelected = false;	
 		Game.isAnySelected = false;
 	}
 }
