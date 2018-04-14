@@ -15,6 +15,7 @@ public abstract class Piece
     private int x;
     private int y;
     private int colour;
+	public boolean isFirstMove;
     
     public static final int WHITE = 0;
     public static final int BLACK = 1;

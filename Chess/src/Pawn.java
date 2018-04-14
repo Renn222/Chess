@@ -7,7 +7,6 @@ import javax.swing.BorderFactory;
 
 public class Pawn extends Piece
 {
-	boolean isFirstMove;
 	List<Tile> tileOptions = new ArrayList<Tile>();
 	
 	public Pawn(int colour, int type, int x, int y) 
@@ -34,12 +33,12 @@ public class Pawn extends Piece
 			
 			if(!tile.isPiece())
 			{
-				tile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));				
+				tile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+				tile.isPossibleMove = true;
 				tileOptions.add(tile);
 			}		
 		}
 		
-		isFirstMove = false;
 		return tileOptions;
 	}
 

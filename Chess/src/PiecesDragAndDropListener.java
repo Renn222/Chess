@@ -9,15 +9,16 @@ public class PiecesDragAndDropListener implements MouseListener
 {
 
     private List<Piece> pieces;
-    private Piece piece;
+    public Piece piece;
     private Tile tile;
+    private Tile originTile;
 
     private Piece dragPiece;
     private int dragOffsetX;
     private int dragOffsetY;
 
 
-    public PiecesDragAndDropListener(Tile tile) 
+    public PiecesDragAndDropListener(Tile tile, Piece piece) 
     {
         this.pieces = pieces;
         this.tile  = tile;
@@ -26,20 +27,35 @@ public class PiecesDragAndDropListener implements MouseListener
 
     @Override
     public void mousePressed(MouseEvent evt) 
-    {    	
+    {   
         if(tile.isPiece())
         {
         	tile.select();
         }
+        else if(tile.isPossibleMove)
+        {
+        	setPiece(originTile.getPiece());
+        	tile.setPiece(piece);
+			
+        	originTile.removePiece();
+			originTile.deselect();
+			
+			for(Tile i: originTile.tileOptions)
+			{
+				i.isPossibleMove = false;
+				i.isPossibleMove = false;
+			}
+        }
     }
 
-    
-    private boolean mouseOverPiece(Piece piece, int x, int y) 
+    public void setPiece(Piece p)
     {
-        return piece.getX() <= x
-                && piece.getX()+piece.getWidth() >= x
-                && piece.getY() <= y
-                && piece.getY()+piece.getHeight() >= y;
+    	piece = p;
+    }
+    
+    public void setOriginTile(Tile t)
+    {
+    	originTile = t;
     }
 
     @Override

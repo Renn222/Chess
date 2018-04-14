@@ -12,13 +12,14 @@ import javax.swing.border.Border;
 
 public class Tile extends JPanel implements Cloneable
 {
-	private boolean ispossibledestination;
+	public boolean isPossibleMove;
 	private JLabel content;
 	private Piece piece;
 	int x,y;                             //is public because this is to be accessed by all the other class
 	public boolean isSelected = false;
 	private boolean ischeck = false;
-	private List<Tile> tileOptions = new ArrayList<Tile>();
+	public List<Tile> tileOptions = new ArrayList<Tile>();
+	PiecesDragAndDropListener listener;
 	
 	int colour;
 	private static final int WHITE = 0;
@@ -29,6 +30,8 @@ public class Tile extends JPanel implements Cloneable
 	{		
 		this.x = x;
 		this.y = y;
+		piece = p;
+
 		
 		setLayout(new BorderLayout());
 	
@@ -44,26 +47,28 @@ public class Tile extends JPanel implements Cloneable
 			colour = WHITE;
 		}
 	 
-		if(p!=null)
+		if(piece!=null)
 		{
-			setPiece(p);
+			setPiece(piece);
 		}
 		
-		PiecesDragAndDropListener listener = new PiecesDragAndDropListener(this);
+		this.listener = new PiecesDragAndDropListener(this, piece);
 
 	    this.addMouseListener(listener);
 	}
 	
-	public void setPiece(Piece p)    //Function to inflate a cell with a piece
+	public void setPiece(Piece p)    
 	{
-		piece=p;
-		ImageIcon img = p.getImageIcon();
+		piece = p;
+		ImageIcon img = piece.getImageIcon();
 		content = new JLabel(img);
 		this.add(content);
 	}
 	
-	public void removePiece()      //Function to remove a piece from the cell
+	public void removePiece()     
 	{
+		piece.isFirstMove = false;
+
 		/*if (piece instanceof King)
 		{
 			piece=null;
@@ -71,7 +76,8 @@ public class Tile extends JPanel implements Cloneable
 		}
 		else*/
 		{
-			piece=null;
+			piece = null;
+			listener.piece = null;
 			this.remove(content);
 		}
 	}
@@ -93,12 +99,16 @@ public class Tile extends JPanel implements Cloneable
 		
 		else if(!Game.isAnySelected)
 		{
-			
 			setBackground(new Color(143, 188, 143));
 			isSelected = true;
 			Game.isAnySelected = true;
 			
 			tileOptions = piece.getMoves();
+			
+			for(Tile i: tileOptions)
+			{
+				i.listener.setOriginTile(this);
+			}
 		}
 		
 	}
@@ -121,5 +131,10 @@ public class Tile extends JPanel implements Cloneable
 		
 		isSelected = false;	
 		Game.isAnySelected = false;
+	}
+
+	public Piece getPiece() 
+	{
+		return piece;
 	}
 }
