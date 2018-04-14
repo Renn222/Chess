@@ -37,9 +37,7 @@ public class Board extends JPanel
 	
 	public static Tile boardState[][];
     Tile tile;
-    
-    private Container content;
-    
+      
     private List<Piece> pieces = new ArrayList<Piece>();
 
     public Board()
@@ -52,35 +50,35 @@ public class Board extends JPanel
     	// create and place pieces
         //
         // rook, knight, bishop, queen, king, bishop, knight, and rook
-	    wr01 = new Rook(WHITE, TYPE_ROOK, 0, 7);
-        wr02 = new Rook(WHITE, TYPE_ROOK, 7, 7);
-        br01 = new Rook(BLACK, TYPE_ROOK, 0, 0);
-        br02 = new Rook(BLACK, TYPE_ROOK, 7, 0);	
+	    wr01 = new Rook(WHITE, TYPE_ROOK);
+        wr02 = new Rook(WHITE, TYPE_ROOK);
+        br01 = new Rook(BLACK, TYPE_ROOK);
+        br02 = new Rook(BLACK, TYPE_ROOK);	
         
-        wk01 = new Knight(WHITE, TYPE_KNIGHT, 1, 7);
-        wk02 = new Knight(WHITE, TYPE_KNIGHT, 6, 7);
-        bk01 = new Knight(BLACK, TYPE_KNIGHT, 6, 0);
-        bk02 = new Knight(BLACK, TYPE_KNIGHT, 1, 0);
+        wk01 = new Knight(WHITE, TYPE_KNIGHT);
+        wk02 = new Knight(WHITE, TYPE_KNIGHT);
+        bk01 = new Knight(BLACK, TYPE_KNIGHT);
+        bk02 = new Knight(BLACK, TYPE_KNIGHT);
                
-        wb01 = new Bishop(WHITE, TYPE_BISHOP, 2, 7);
-        wb02 = new Bishop(WHITE, TYPE_BISHOP, 5, 7);
-        bb01 = new Bishop(BLACK, TYPE_BISHOP, 5, 0);
-        bb02 = new Bishop(BLACK, TYPE_BISHOP, 2, 0);
+        wb01 = new Bishop(WHITE, TYPE_BISHOP);
+        wb02 = new Bishop(WHITE, TYPE_BISHOP);
+        bb01 = new Bishop(BLACK, TYPE_BISHOP);
+        bb02 = new Bishop(BLACK, TYPE_BISHOP);
 
-        wk = new King(WHITE, TYPE_KING, 3, 7);
-        wq = new Queen(WHITE, TYPE_QUEEN, 4, 7);
-        bk = new King(BLACK, TYPE_QUEEN, 3, 0);
-        bq = new Queen(BLACK, TYPE_KING, 4, 0);
+        wk = new King(WHITE, TYPE_KING);
+        wq = new Queen(WHITE, TYPE_QUEEN);
+        bk = new King(BLACK, TYPE_QUEEN);
+        bq = new Queen(BLACK, TYPE_KING);
         
         // pawns
         for (int x = 0; x < 8; x++)
         {
-            wp[x] = new Pawn(WHITE, TYPE_PAWN, x, 6);
+            wp[x] = new Pawn(WHITE, TYPE_PAWN);
         }
 
         for (int x = 0; x < 8; x++) 
         {
-            bp[x] = new Pawn(BLACK, TYPE_PAWN, x, 1);
+            bp[x] = new Pawn(BLACK, TYPE_PAWN);
         }
         
         boardState = new Tile[8][8];
@@ -126,7 +124,7 @@ public class Board extends JPanel
 	            else if (height == 0 && width == 4)
 	                P = bq;
 	            
-	            // white kinga and queen
+	            // white king and queen
 	            else if (height == 7 && width == 3)
 	                P = wk;
 	            else if (height == 7 && width == 4)
@@ -138,7 +136,7 @@ public class Board extends JPanel
 	            else if (height == 6)
 	                P = wp[width];
 	            
-	            tile = new Tile(height, width, P);
+	            tile = new Tile(width, height, P);
 	            this.add(tile);
 	            this.pieces.add(P);
 	            boardState[width][height] = tile;

@@ -27,12 +27,10 @@ public abstract class Piece
     private static final int TYPE_KING = 5;
     private static final int TYPE_PAWN = 6;
 
-    public Piece(int colour, int type, int x, int y) 
+    public Piece(int colour, int type) 
     {
     	Image img = getImageForPiece(colour, type);
         this.img = img;
-        this.x = x;
-        this.y = y;
         this.colour = colour;
         
     }

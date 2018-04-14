@@ -60,6 +60,9 @@ public class Tile extends JPanel implements Cloneable
 	public void setPiece(Piece p)    
 	{
 		piece = p;
+		piece.setX(x);
+		piece.setY(y);
+		
 		ImageIcon img = piece.getImageIcon();
 		content = new JLabel(img);
 		this.add(content);

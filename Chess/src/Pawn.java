@@ -9,9 +9,9 @@ public class Pawn extends Piece
 {
 	List<Tile> tileOptions = new ArrayList<Tile>();
 	
-	public Pawn(int colour, int type, int x, int y) 
+	public Pawn(int colour, int type) 
 	{
-		super(colour, type, x, y);
+		super(colour, type);
 		isFirstMove = true;
 	}
 	
@@ -36,7 +36,26 @@ public class Pawn extends Piece
 				tile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
 				tile.isPossibleMove = true;
 				tileOptions.add(tile);
-			}		
+			} 
+			
+			else
+			{
+				break;
+			}
+		}
+
+		currentY = (getColour() == WHITE) ? getY() - 1 : getY() + 1;
+		
+		for(int i = - 1; i <= 1; i += 2)
+		{
+			tile = Board.boardState[getX() + i][currentY];
+
+			if(tile.isPiece() && tile.getPiece().getColour() != getColour())
+			{
+				tile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+				tile.isPossibleMove = true;
+				tileOptions.add(tile);
+			}
 		}
 		
 		return tileOptions;

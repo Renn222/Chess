@@ -3,9 +3,9 @@ import java.util.List;
 public class Queen extends Piece
 {
 
-	public Queen(int colour, int type, int x, int y) 
+	public Queen(int colour, int type) 
 	{
-		super(colour, type, x, y);
+		super(colour, type);
 	}
 	
 	public List<Tile> getMoves()
