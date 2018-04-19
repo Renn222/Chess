@@ -6,9 +6,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 
 public class Pawn extends Piece
-{
-	List<Tile> tileOptions = new ArrayList<Tile>();
-	
+{	
 	public Pawn(int colour, int type) 
 	{
 		super(colour, type);
@@ -18,8 +16,6 @@ public class Pawn extends Piece
 	public List<Tile> getMoves()
 	{
 		int distance = 1;
-		Tile tile = null;
-		int currentY = 0;
 		
 		if(isFirstMove)
 		{
@@ -29,18 +25,24 @@ public class Pawn extends Piece
 		for(int i = 1; i <= distance; i++)
 		{
 			currentY = (getColour() == WHITE) ? getY() - i : getY() + i;
-			tile = Board.boardState[getX()][currentY];
+			currentX = getX();
 			
-			if(!tile.isPiece())
+			if(isLegal())
 			{
-				tile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
-				tile.isPossibleMove = true;
-				tileOptions.add(tile);
-			} 
-			
-			else
-			{
-				break;
+				possTile = Board.boardState[currentX][currentY];
+				
+				if(!possTile.isPiece())
+				{
+					possTile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+					possTile.isPossibleMove = true;
+					tileOptions.add(possTile);
+				} 
+				
+				else
+				{
+					break;
+				}
+
 			}
 		}
 
@@ -48,17 +50,20 @@ public class Pawn extends Piece
 		
 		for(int i = - 1; i <= 1; i += 2)
 		{
-			tile = Board.boardState[getX() + i][currentY];
-
-			if(tile.isPiece() && tile.getPiece().getColour() != getColour())
+			currentX = getX() + i;
+			if(isLegal())
 			{
-				tile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
-				tile.isPossibleMove = true;
-				tileOptions.add(tile);
-			}
+				possTile = Board.boardState[currentX][currentY];
+
+				if(possTile.isPiece() && possTile.getPiece().getColour() != getColour())
+				{
+					possTile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+					possTile.isPossibleMove = true;
+					tileOptions.add(possTile);
+				}
+			}			
 		}
 		
 		return tileOptions;
 	}
-
 }

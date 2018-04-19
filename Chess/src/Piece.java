@@ -1,6 +1,7 @@
 
 import java.awt.Image;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -16,6 +17,8 @@ public abstract class Piece
     private int y;
     private int colour;
 	public boolean isFirstMove;
+	public int currentY;
+	public int currentX;
     
     public static final int WHITE = 0;
     public static final int BLACK = 1;
@@ -26,6 +29,10 @@ public abstract class Piece
     private static final int TYPE_QUEEN = 4;
     private static final int TYPE_KING = 5;
     private static final int TYPE_PAWN = 6;
+
+	List<Tile> tileOptions = new ArrayList<Tile>();
+	Tile possTile = null;
+
 
     public Piece(int colour, int type) 
     {
@@ -115,5 +122,15 @@ public abstract class Piece
 
         URL urlPieceImg = getClass().getResource("images/" + filename);
         return new ImageIcon(urlPieceImg).getImage();        
+    }
+    
+    public boolean isLegal()
+    {
+    	if((currentY >= 0 && currentY <= 8) && (currentX >= 0 && currentX <= 8))
+    	{
+    		return true;
+    	}
+		return false;
+    	
     }
 }
