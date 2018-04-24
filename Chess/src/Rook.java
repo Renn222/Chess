@@ -9,6 +9,24 @@ public class Rook extends Piece
 	
 	public List<Tile> getMoves()
 	{
-		return null;
+		for(int i = -8; i <= 8; i++)
+		{
+			possY = getY() + i;
+			possX = getX();
+			
+			if(isLegal())
+			{
+				selectTile();
+			}
+			
+			possY = getY();
+			possX = getX() + i;
+			
+			if(isLegal())
+			{
+				selectTile();
+			}
+		}
+		return tileOptions;
 	}
 }

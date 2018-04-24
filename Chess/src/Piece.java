@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Image;
 import java.net.URL;
 import java.util.ArrayList;
@@ -16,10 +17,11 @@ public abstract class Piece
     private int x;
     private int y;
     private int colour;
+	public int possY;
+	public int possX;
+	public boolean isTherePiece = false;
 	public boolean isFirstMove;
-	public int currentY;
-	public int currentX;
-    
+	
     public static final int WHITE = 0;
     public static final int BLACK = 1;
     
@@ -31,7 +33,7 @@ public abstract class Piece
     private static final int TYPE_PAWN = 6;
 
 	List<Tile> tileOptions = new ArrayList<Tile>();
-	Tile possTile = null;
+	Tile possTile;
 
 
     public Piece(int colour, int type) 
@@ -126,11 +128,32 @@ public abstract class Piece
     
     public boolean isLegal()
     {
-    	if((currentY >= 0 && currentY <= 8) && (currentX >= 0 && currentX <= 8))
+    	if(isTherePiece != true)
     	{
+    		if((possY >= 0 && possY <= 7) && (possX >= 0 && possX <= 7))
+        	{
+    			possTile = Board.boardState[possX][possY];
+    			
+    			if(possTile.isPiece() != false)
+    			{
+    				if(possTile.getPiece().getColour() == getColour())
+    				{
+    					isTherePiece = true;
+    					return false;
+    				}
+    			}	
+    			
     		return true;
-    	}
-		return false;
+        	}
+        }
     	
+    	return false;
+    }
+    
+    public void selectTile()
+    {
+    	possTile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+		possTile.isPossibleMove = true;
+		tileOptions.add(possTile);
     }
 }

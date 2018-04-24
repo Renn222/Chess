@@ -13,14 +13,8 @@ public class PiecesDragAndDropListener implements MouseListener
     private Tile tile;
     private Tile originTile;
 
-    private Piece dragPiece;
-    private int dragOffsetX;
-    private int dragOffsetY;
-
-
     public PiecesDragAndDropListener(Tile tile, Piece piece) 
     {
-        this.pieces = pieces;
         this.tile  = tile;
         this.piece = piece;
     }
@@ -64,13 +58,7 @@ public class PiecesDragAndDropListener implements MouseListener
     	originTile = t;
     }
 
-    @Override
-    public void mouseReleased(MouseEvent arg0) 
-    {
-    	
-        this.dragPiece = null;
-    }
-
+  
     @Override
     public void mouseClicked(MouseEvent arg0) {
     	
@@ -81,5 +69,11 @@ public class PiecesDragAndDropListener implements MouseListener
 
     @Override
     public void mouseExited(MouseEvent arg0) {}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

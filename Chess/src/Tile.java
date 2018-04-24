@@ -132,6 +132,12 @@ public class Tile extends JPanel implements Cloneable
 			x.setBorder(null);
 		}
 		
+		for(Tile i: tileOptions)
+		{
+			i.isPossibleMove = false;
+			i.isPossibleMove = false;
+		}
+		
 		isSelected = false;	
 		Game.isAnySelected = false;
 	}

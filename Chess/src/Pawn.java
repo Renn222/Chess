@@ -24,46 +24,35 @@ public class Pawn extends Piece
 
 		for(int i = 1; i <= distance; i++)
 		{
-			currentY = (getColour() == WHITE) ? getY() - i : getY() + i;
-			currentX = getX();
+			possY = (getColour() == WHITE) ? getY() - i : getY() + i;
+			possX = getX();
 			
+			possTile = Board.boardState[possX][possY];
+
 			if(isLegal())
 			{
-				possTile = Board.boardState[currentX][currentY];
-				
-				if(!possTile.isPiece())
-				{
-					possTile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
-					possTile.isPossibleMove = true;
-					tileOptions.add(possTile);
-				} 
-				
-				else
-				{
-					break;
-				}
+				selectTile();
+			}	
 
-			}
 		}
 
-		currentY = (getColour() == WHITE) ? getY() - 1 : getY() + 1;
+		possY = (getColour() == WHITE) ? getY() - 1 : getY() + 1;
 		
 		for(int i = - 1; i <= 1; i += 2)
 		{
-			currentX = getX() + i;
+			possX = getX() + i;
+
 			if(isLegal())
 			{
-				possTile = Board.boardState[currentX][currentY];
 
 				if(possTile.isPiece() && possTile.getPiece().getColour() != getColour())
 				{
-					possTile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
-					possTile.isPossibleMove = true;
-					tileOptions.add(possTile);
+					selectTile();
 				}
 			}			
 		}
 		
+		isTherePiece = false;
 		return tileOptions;
 	}
 }
