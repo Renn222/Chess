@@ -142,6 +142,17 @@ public class Board extends JPanel
 	            boardState[width][height] = tile;
 	        }
 	    }
+<<<<<<< HEAD
+=======
+	}
+	
+	private Piece createAndAddPiece(int color, int type, int x, int y) 
+	{
+	   	Image img = getImageForPiece(color, type);
+	    Pawn piece = new Pawn(img, x, y);
+	    this.pieces.add(piece);
+	    return piece;
+>>>>>>> master
 	}
     
     public Tile getTile(int x, int y)

@@ -60,11 +60,36 @@ public class PiecesDragAndDropListener implements MouseListener
 
   
     @Override
+<<<<<<< HEAD
     public void mouseClicked(MouseEvent arg0) {
     	
     }
 
     @Override
+=======
+    public void mouseDragged(MouseEvent evt) 
+    {
+    	System.out.println(evt.getPoint().x);
+        if(this.dragPiece != null)
+        {
+        	if((evt.getPoint().y - this.dragOffsetY) > 100)
+        	{
+        		System.out.println("Yes");
+        	}
+        	this.dragPiece.setX(evt.getPoint().x - this.dragOffsetX);
+            this.dragPiece.setY(evt.getPoint().y - this.dragOffsetY);
+            this.chessGui.repaint();
+        }
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+    	
+    }
+
+    @Override
+>>>>>>> master
     public void mouseEntered(MouseEvent arg0) {}
 
     @Override

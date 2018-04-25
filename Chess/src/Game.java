@@ -8,8 +8,11 @@ import javax.swing.JFrame;
 public class Game 
 {
     private Container content;
+<<<<<<< HEAD
     
     public static boolean isAnySelected = false;
+=======
+>>>>>>> master
     public Game()
     {
     	JFrame f = new JFrame();
