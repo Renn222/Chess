@@ -21,6 +21,7 @@ public abstract class Piece
 	public int possX;
 	public boolean isTherePiece = false;
 	public boolean isFirstMove;
+	public int type;
 	
     public static final int WHITE = 0;
     public static final int BLACK = 1;
@@ -41,6 +42,7 @@ public abstract class Piece
     	Image img = getImageForPiece(colour, type);
         this.img = img;
         this.colour = colour;
+		this.type = type;
         
     }
 
@@ -128,24 +130,26 @@ public abstract class Piece
     
     public boolean isLegal()
     {
-    	if(isTherePiece != true)
+    	if(isTherePiece == true && type != TYPE_KNIGHT)
     	{
-    		if((possY >= 0 && possY <= 7) && (possX >= 0 && possX <= 7))
-        	{
-    			possTile = Board.boardState[possX][possY];
-    			
-    			if(possTile.isPiece() != false)
-    			{
-    				if(possTile.getPiece().getColour() == getColour())
-    				{
-    					isTherePiece = true;
-    					return false;
-    				}
-    			}	
-    			
-    		return true;
-        	}
-        }
+			break;
+		}
+	    
+	if((possY >= 0 && possY <= 7) && (possX >= 0 && possX <= 7))
+	{
+		possTile = Board.boardState[possX][possY];
+
+		if(possTile.isPiece() != false)
+		{
+			if(possTile.getPiece().getColour() == getColour())
+			{
+				isTherePiece = true;
+				return false;
+			}
+		}	
+
+		return true;
+	}
     	
     	return false;
     }
