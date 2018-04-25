@@ -1,54 +1,77 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 public class Tile extends JPanel implements Cloneable
 {
-	private boolean ispossibledestination;
+	public boolean isPossibleMove;
 	private JLabel content;
 	private Piece piece;
 	int x,y;                             //is public because this is to be accessed by all the other class
-	private boolean isSelected=false;
-	private boolean ischeck=false;
+	public boolean isSelected = false;
+	private boolean ischeck = false;
+	public List<Tile> tileOptions = new ArrayList<Tile>();
+	PiecesDragAndDropListener listener;
 	
-	public Tile(int x,int y,Piece p)
+	int colour;
+	private static final int WHITE = 0;
+    private static final int BLACK = 1;
+
+	
+	public Tile(int x, int y, Piece p)
 	{		
-		this.x=x;
-		this.y=y;
+		this.x = x;
+		this.y = y;
+		piece = p;
+
 		
 		setLayout(new BorderLayout());
 	
 		if((x + y) % 2 == 0)
 		{
 			setBackground(new Color(128, 128, 128));
+			colour = BLACK;
 		}
 	
 		else
 		{
 			setBackground(Color.white);
+			colour = WHITE;
 		}
 	 
-		if(p!=null)
+		if(piece!=null)
 		{
-			setPiece(p);
+			setPiece(piece);
 		}
+		
+		this.listener = new PiecesDragAndDropListener(this, piece);
+
+	    this.addMouseListener(listener);
 	}
 	
-	public void setPiece(Piece p)    //Function to inflate a cell with a piece
+	public void setPiece(Piece p)    
 	{
-		piece=p;
-		ImageIcon img = p.getImageIcon();
-		//ImageIcon img = new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
+		piece = p;
+		piece.setX(x);
+		piece.setY(y);
+		
+		ImageIcon img = piece.getImageIcon();
 		content = new JLabel(img);
 		this.add(content);
 	}
 	
-	public void removePiece()      //Function to remove a piece from the cell
+	public void removePiece()     
 	{
+		piece.isFirstMove = false;
+
 		/*if (piece instanceof King)
 		{
 			piece=null;
@@ -56,8 +79,71 @@ public class Tile extends JPanel implements Cloneable
 		}
 		else*/
 		{
-			piece=null;
+			piece = null;
+			listener.piece = null;
 			this.remove(content);
 		}
+	}
+	public boolean isPiece()
+	{
+		if(piece != null)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public void select()
+	{
+		if(isSelected)
+		{
+			deselect();
+		}
+		
+		else if(!Game.isAnySelected)
+		{
+			setBackground(new Color(143, 188, 143));
+			isSelected = true;
+			Game.isAnySelected = true;
+			
+			tileOptions = piece.getMoves();
+			
+			for(Tile i: tileOptions)
+			{
+				i.listener.setOriginTile(this);
+			}
+		}
+		
+	}
+	
+	public void deselect()
+	{
+		if(colour == BLACK)
+		{
+			setBackground(new Color(128, 128, 128));
+		}
+		else if(colour == WHITE)
+		{
+			setBackground(Color.white);
+		}
+		
+		for(Tile x: tileOptions)
+		{
+			x.setBorder(null);
+		}
+		
+		for(Tile i: tileOptions)
+		{
+			i.isPossibleMove = false;
+			i.isPossibleMove = false;
+		}
+		
+		isSelected = false;	
+		Game.isAnySelected = false;
+	}
+
+	public Piece getPiece() 
+	{
+		return piece;
 	}
 }

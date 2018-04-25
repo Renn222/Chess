@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 
 public class Board extends JPanel
 {
-	private static final int COLOR_WHITE = 0;
-    private static final int COLOR_BLACK = 1;
+	private static final int WHITE = 0;
+    private static final int BLACK = 1;
 
     private static final int TYPE_ROOK = 1;
     private static final int TYPE_KNIGHT = 2;
@@ -28,9 +28,6 @@ public class Board extends JPanel
     private static final int BOARD_START_X = 53;
     private static final int BOARD_START_Y = 35;
 
-    private static final int TILE_OFFSET_X = 62;
-    private static final int TILE_OFFSET_Y = 61;
-
     private static Piece wr01,wr02,br01,br02;
 	private static Piece wk01,wk02,bk01,bk02;
 	private static Piece wb01,wb02,bb01,bb02;
@@ -38,11 +35,9 @@ public class Board extends JPanel
 	private static Piece [] wp, bp;
 	private static Piece P;
 	
-	private Tile boardState[][];
+	public static Tile boardState[][];
     Tile tile;
-    
-    private Container content;
-    
+      
     private List<Piece> pieces = new ArrayList<Piece>();
 
     public Board()
@@ -55,90 +50,100 @@ public class Board extends JPanel
     	// create and place pieces
         //
         // rook, knight, bishop, queen, king, bishop, knight, and rook
-	    wr01 = createAndAddPiece(COLOR_WHITE, TYPE_ROOK, BOARD_START_X + TILE_OFFSET_X * 0, BOARD_START_Y + TILE_OFFSET_Y * 7);
-        wr02 = createAndAddPiece(COLOR_WHITE, TYPE_ROOK, BOARD_START_X + TILE_OFFSET_X * 7, BOARD_START_Y + TILE_OFFSET_Y * 7);
-        br01 = createAndAddPiece(COLOR_BLACK, TYPE_ROOK, BOARD_START_X + TILE_OFFSET_X * 0, BOARD_START_Y + TILE_OFFSET_Y * 0);
-        br02 = createAndAddPiece(COLOR_BLACK, TYPE_ROOK, BOARD_START_X + TILE_OFFSET_X * 7, BOARD_START_Y + TILE_OFFSET_Y * 0);	
+	    wr01 = new Rook(WHITE, TYPE_ROOK);
+        wr02 = new Rook(WHITE, TYPE_ROOK);
+        br01 = new Rook(BLACK, TYPE_ROOK);
+        br02 = new Rook(BLACK, TYPE_ROOK);	
         
-        wk01 = createAndAddPiece(COLOR_WHITE, TYPE_KNIGHT, BOARD_START_X + TILE_OFFSET_X * 1, BOARD_START_Y + TILE_OFFSET_Y * 7);
-        wk02 = createAndAddPiece(COLOR_WHITE, TYPE_KNIGHT, BOARD_START_X + TILE_OFFSET_X * 6, BOARD_START_Y + TILE_OFFSET_Y * 7);
-        bk01 = createAndAddPiece(COLOR_BLACK, TYPE_KNIGHT, BOARD_START_X + TILE_OFFSET_X * 1, BOARD_START_Y + TILE_OFFSET_Y * 0);
-        bk02 = createAndAddPiece(COLOR_BLACK, TYPE_KNIGHT, BOARD_START_X + TILE_OFFSET_X * 6, BOARD_START_Y + TILE_OFFSET_Y * 0);
+        wk01 = new Knight(WHITE, TYPE_KNIGHT);
+        wk02 = new Knight(WHITE, TYPE_KNIGHT);
+        bk01 = new Knight(BLACK, TYPE_KNIGHT);
+        bk02 = new Knight(BLACK, TYPE_KNIGHT);
                
-        wb01 = createAndAddPiece(COLOR_WHITE, TYPE_BISHOP, BOARD_START_X + TILE_OFFSET_X * 2, BOARD_START_Y + TILE_OFFSET_Y * 7);
-        wb02 = createAndAddPiece(COLOR_WHITE, TYPE_BISHOP, BOARD_START_X + TILE_OFFSET_X * 5, BOARD_START_Y + TILE_OFFSET_Y * 7);
-        bb01 = createAndAddPiece(COLOR_BLACK, TYPE_BISHOP, BOARD_START_X + TILE_OFFSET_X * 2, BOARD_START_Y + TILE_OFFSET_Y * 0);
-        bb02 = createAndAddPiece(COLOR_BLACK, TYPE_BISHOP, BOARD_START_X + TILE_OFFSET_X * 5, BOARD_START_Y + TILE_OFFSET_Y * 0);
+        wb01 = new Bishop(WHITE, TYPE_BISHOP);
+        wb02 = new Bishop(WHITE, TYPE_BISHOP);
+        bb01 = new Bishop(BLACK, TYPE_BISHOP);
+        bb02 = new Bishop(BLACK, TYPE_BISHOP);
 
-        wk = createAndAddPiece(COLOR_WHITE, TYPE_KING, BOARD_START_X + TILE_OFFSET_X * 3, BOARD_START_Y + TILE_OFFSET_Y * 7);
-        wq = createAndAddPiece(COLOR_WHITE, TYPE_QUEEN, BOARD_START_X + TILE_OFFSET_X * 4, BOARD_START_Y + TILE_OFFSET_Y * 7);
-        bk = createAndAddPiece(COLOR_BLACK, TYPE_QUEEN, BOARD_START_X + TILE_OFFSET_X * 3, BOARD_START_Y + TILE_OFFSET_Y * 0);
-        bq = createAndAddPiece(COLOR_BLACK, TYPE_KING, BOARD_START_X + TILE_OFFSET_X * 4, BOARD_START_Y + TILE_OFFSET_Y * 0);
+        wk = new King(WHITE, TYPE_KING);
+        wq = new Queen(WHITE, TYPE_QUEEN);
+        bk = new King(BLACK, TYPE_QUEEN);
+        bq = new Queen(BLACK, TYPE_KING);
         
         // pawns
-        for (int i = 0; i < 8; i++)
+        for (int x = 0; x < 8; x++)
         {
-            wp[i] = createAndAddPiece(COLOR_WHITE, TYPE_PAWN, BOARD_START_X + TILE_OFFSET_X * i, BOARD_START_Y + TILE_OFFSET_Y * 6);
+            wp[x] = new Pawn(WHITE, TYPE_PAWN);
         }
 
-        for (int i = 0; i < 8; i++) 
+        for (int x = 0; x < 8; x++) 
         {
-            bp[i] = createAndAddPiece(COLOR_BLACK, TYPE_PAWN, BOARD_START_X + TILE_OFFSET_X * i, BOARD_START_Y + TILE_OFFSET_Y * 1);
+            bp[x] = new Pawn(BLACK, TYPE_PAWN);
         }
         
         boardState = new Tile[8][8];
         
-	    for (int i = 0; i < 8; i++)
+	    for (int height = 0; height < 8; height++)
 	    {
-	        for (int j = 0; j < 8; j++) 
+	        for (int width = 0; width < 8; width++) 
 	        {
 	            P = null;
-	            if (i == 0 && j == 0)
+	            // rooks
+	            if (height == 0 && width == 0)
 	                P = br01;
-	            else if (i == 0 && j == 7)
+	            else if (height == 0 && width == 7)
 	                P = br02;
-	            else if (i == 7 && j == 0)
+	            else if (height == 7 && width == 0)
 	                P = wr01;
-	            else if (i == 7 && j == 7)
+	            else if (height == 7 && width == 7)
 	                P = wr02;
-	            else if (i == 0 && j == 1)
+	            
+	            // knights
+	            else if (height == 0 && width == 1)
 	                P = bk01;
-	            else if (i == 0 && j == 6)
+	            else if (height == 0 && width == 6)
 	                P = bk02;
-	            else if (i == 7 && j == 1)
+	            else if (height == 7 && width == 1)
 	                P = wk01;
-	            else if (i == 7 && j == 6)
+	            else if (height == 7 && width == 6)
 	                P = wk02;
-	            else if (i == 0 && j == 2)
+	            
+	            // bishop
+	            else if (height == 0 && width == 2)
 	                P = bb01;
-	            else if (i == 0 && j == 5)
+	            else if (height == 0 && width == 5)
 	                P = bb02;
-	            else if (i == 7 && j == 2)
+	            else if (height == 7 && width == 2)
 	                P = wb01;
-	            else if (i == 7 && j == 5)
+	            else if (height == 7 && width == 5)
 	                P = wb02;
-	            else if (i == 0 && j == 3)
+	            
+	            // black king and queen
+	            else if (height == 0 && width == 3)
 	                P = bk;
-	            else if (i == 0 && j == 4)
+	            else if (height == 0 && width == 4)
 	                P = bq;
-	            else if (i == 7 && j == 3)
+	            
+	            // white king and queen
+	            else if (height == 7 && width == 3)
 	                P = wk;
-	            else if (i == 7 && j == 4)
+	            else if (height == 7 && width == 4)
 	                P = wq;
-	            else if (i == 1)
-	                P = bp[j];
-	            else if (i == 6)
-	                P = wp[j];
-	            tile = new Tile(i, j, P);
+	            
+	            // pawns
+	            else if (height == 1)
+	                P = bp[width];
+	            else if (height == 6)
+	                P = wp[width];
+	            
+	            tile = new Tile(width, height, P);
 	            this.add(tile);
-	            PiecesDragAndDropListener listener = new PiecesDragAndDropListener(this.pieces, this);
-
-	    	    this.addMouseListener(listener);
-	    	    this.addMouseMotionListener(listener);
-
-	            boardState[i][j] = tile;
+	            this.pieces.add(P);
+	            boardState[width][height] = tile;
 	        }
 	    }
+<<<<<<< HEAD
+=======
 	}
 	
 	private Piece createAndAddPiece(int color, int type, int x, int y) 
@@ -147,54 +152,13 @@ public class Board extends JPanel
 	    Pawn piece = new Pawn(img, x, y);
 	    this.pieces.add(piece);
 	    return piece;
+>>>>>>> master
 	}
-
-	    /**
-	     * load image for given color and type. This method translates the color and
-	     * type information into a filename and loads that particular file.
-	     *
-	     * @param color color constant
-	     * @param type type constant
-	     * @return image
-	     */
-    private Image getImageForPiece(int color, int type) 
+    
+    public Tile getTile(int x, int y)
     {
-        String filename = "";
-
-        filename += (color == COLOR_WHITE ? "White_" : "Black_");
-        switch (type) 
-        {
-            case TYPE_BISHOP:
-                filename += "Bishop";
-                break;
-            case TYPE_KING:
-                filename += "King";
-                break;
-            case TYPE_KNIGHT:
-                filename += "Knight";
-                break;
-            case TYPE_PAWN:
-                filename += "Pawn";
-                break;
-            case TYPE_QUEEN:
-                filename += "Queen";
-                break;
-            case TYPE_ROOK:
-                filename += "Rook";
-                break;
-        }
-        filename += ".png";
-
-        URL urlPieceImg = getClass().getResource("images/" + filename);
-        return new ImageIcon(urlPieceImg).getImage();
-        
-        
+    	Tile i = boardState[x][y];
+		return i;
     }
- 
-    public static void main(String[] args) 
-    {
-        new Board();
-    }
-
 }
 
