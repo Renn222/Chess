@@ -1,16 +1,7 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Board extends JPanel
@@ -67,8 +58,8 @@ public class Board extends JPanel
 
         wk = new King(WHITE, TYPE_KING);
         wq = new Queen(WHITE, TYPE_QUEEN);
-        bk = new King(BLACK, TYPE_QUEEN);
-        bq = new Queen(BLACK, TYPE_KING);
+        bk = new King(BLACK, TYPE_KING);
+        bq = new Queen(BLACK, TYPE_QUEEN);
         
         // pawns
         for (int x = 0; x < 8; x++)
@@ -142,17 +133,6 @@ public class Board extends JPanel
 	            boardState[width][height] = tile;
 	        }
 	    }
-<<<<<<< HEAD
-=======
-	}
-	
-	private Piece createAndAddPiece(int color, int type, int x, int y) 
-	{
-	   	Image img = getImageForPiece(color, type);
-	    Pawn piece = new Pawn(img, x, y);
-	    this.pieces.add(piece);
-	    return piece;
->>>>>>> master
 	}
     
     public Tile getTile(int x, int y)

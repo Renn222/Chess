@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.Insets;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,9 @@ import javax.swing.BorderFactory;
 
 
 import javax.swing.ImageIcon;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 public abstract class Piece 
 {
@@ -17,11 +21,12 @@ public abstract class Piece
     private int x;
     private int y;
     private int colour;
+    private int type;
+    
 	public int possY;
 	public int possX;
 	public boolean isTherePiece = false;
 	public boolean isFirstMove;
-	public int type;
 	
     public static final int WHITE = 0;
     public static final int BLACK = 1;
@@ -39,11 +44,11 @@ public abstract class Piece
 
     public Piece(int colour, int type) 
     {
-    	Image img = getImageForPiece(colour, type);
-        this.img = img;
         this.colour = colour;
-		this.type = type;
+        this.type = type;
         
+    	Image img = getImageForPiece(colour);
+        this.img = img;
     }
 
     public int getX() 
@@ -96,7 +101,7 @@ public abstract class Piece
     	return colour;
     }
     
-    private Image getImageForPiece(int colour, int type) 
+    private Image getImageForPiece(int colour) 
     {
         String filename = "";
 
@@ -130,33 +135,33 @@ public abstract class Piece
     
     public boolean isLegal()
     {
-    	if(isTherePiece == true && type != TYPE_KNIGHT)
+    	if(!isTherePiece)
     	{
-			break;
-		}
-	    
-	if((possY >= 0 && possY <= 7) && (possX >= 0 && possX <= 7))
-	{
-		possTile = Board.boardState[possX][possY];
+    		if((possY >= 0 && possY <= 7) && (possX >= 0 && possX <= 7))
+        	{
+    			possTile = Board.boardState[possX][possY];
+    			
+    			if(possTile.isPiece())
+    			{
+    				isTherePiece = (type == TYPE_KNIGHT || type == TYPE_PAWN) ? false: true;
 
-		if(possTile.isPiece() != false)
-		{
-			if(possTile.getPiece().getColour() == getColour())
-			{
-				isTherePiece = true;
-				return false;
-			}
-		}	
+    				if(possTile.getPiece().getColour() == getColour())
+    				{
+    					isTherePiece = (type == TYPE_KNIGHT) ? false: true;
+    					return false;
+    				}
+    			}	
 
-		return true;
-	}
-    	
-    	return false;
+    			return true;
+        	}
+    	}
+		return false;
     }
     
-    public void selectTile()
+    public void highlight()
     {
-    	possTile.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+    	possTile.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.RED));
+       	
 		possTile.isPossibleMove = true;
 		tileOptions.add(possTile);
     }

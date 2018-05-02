@@ -8,18 +8,15 @@ import javax.swing.JFrame;
 public class Game 
 {
     private Container content;
-<<<<<<< HEAD
+    public static boolean gameStarted = false;
     
     public static boolean isAnySelected = false;
-=======
->>>>>>> master
     public Game()
     {
     	JFrame f = new JFrame();
     	content = f.getContentPane();
         Board board = new Board();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       	board.setLayout(new BorderLayout(0, 0));
         
         f.add(board);
       	board.setLayout(new GridLayout(8, 8, 0, 0));
@@ -29,6 +26,7 @@ public class Game
         
         content.add(board);
         f.setVisible(true);
+        gameStarted = true;
     }
 
 	public static void main(String [] args)

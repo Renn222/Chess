@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 public class Tile extends JPanel implements Cloneable
 {
@@ -25,7 +27,6 @@ public class Tile extends JPanel implements Cloneable
 	private static final int WHITE = 0;
     private static final int BLACK = 1;
 
-	
 	public Tile(int x, int y, Piece p)
 	{		
 		this.x = x;
@@ -71,13 +72,7 @@ public class Tile extends JPanel implements Cloneable
 	public void removePiece()     
 	{
 		piece.isFirstMove = false;
-
-		/*if (piece instanceof King)
-		{
-			piece=null;
-			this.remove(content);
-		}
-		else*/
+		
 		{
 			piece = null;
 			listener.piece = null;
