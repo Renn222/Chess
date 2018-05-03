@@ -12,6 +12,9 @@ public class PiecesDragAndDropListener implements MouseListener
     public Piece piece;
     private Tile tile;
     private Tile originTile;
+    
+    final int WHITE = 0;
+    final int BLACK = 1;
 
     public PiecesDragAndDropListener(Tile tile, Piece piece) 
     {
@@ -34,7 +37,12 @@ public class PiecesDragAndDropListener implements MouseListener
 			
         	originTile.removePiece();
 			originTile.deselect();
-		
+			Game.turn = (Game.turn == WHITE) ? BLACK : WHITE;
+			
+	        String turnMessage = Game.turnCheck();
+			Game.txtpnHello.setText(turnMessage + " turn");
+
+			
 			for(Tile i: originTile.tileOptions)
 			{
 				i.isPossibleMove = false;
@@ -44,7 +52,10 @@ public class PiecesDragAndDropListener implements MouseListener
     	
     	else if(tile.isPiece())
         {
-        	tile.select();
+        	if(tile.getPiece().getColour() == Game.turn)
+        	{
+        		tile.select();
+        	}
         } 
     }
 

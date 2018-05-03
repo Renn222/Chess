@@ -3,34 +3,61 @@ import java.awt.Container;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import java.awt.Color;
 
 
 public class Game 
 {
     private Container content;
-    public static boolean gameStarted = false;
+    //public static boolean gameStarted = false;
+    final static int WHITE = 0;
+    final static int BLACK = 1;
+    static int turn;
+    static JTextPane txtpnHello = new JTextPane();
+
     
     public static boolean isAnySelected = false;
     public Game()
     {
     	JFrame f = new JFrame();
-    	content = f.getContentPane();
-        Board board = new Board();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        f.add(board);
-      	board.setLayout(new GridLayout(8, 8, 0, 0));
-        f.setResizable(true);
+    	f.setResizable(true);
         f.setSize(800, 800);
         f.setTitle("Chess");
-        
-        content.add(board);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
-        gameStarted = true;
+
+    	
+    	content = f.getContentPane();
+        content.setLayout(new BorderLayout());
+        
+        Board board = new Board();
+
+        content.add(board, BorderLayout.CENTER);
+                     
+        turn = WHITE;
+        
+        String turnMessage = turnCheck();
+        
+        txtpnHello.setBackground(Color.YELLOW);
+        txtpnHello.setText(turnMessage + " turn");
+        f.getContentPane().add(txtpnHello, BorderLayout.NORTH);
+        f.setVisible(true);
+        //gameStarted = true;
+        
+        turn = WHITE;
     }
 
 	public static void main(String [] args)
 	{
 		new Game();
+	}
+	
+	public static String turnCheck()
+	{
+        String turnMessage = (turn == WHITE) ? "White's" : "Black's";
+        
+        return turnMessage;
 	}
 }

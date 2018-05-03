@@ -1,4 +1,5 @@
 
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class Board extends JPanel
 
     public Board()
 	{
+      	this.setLayout(new GridLayout(8, 8, 0, 0));
+
     	
 		wp = new Piece[8];
     	bp = new Piece[8];
