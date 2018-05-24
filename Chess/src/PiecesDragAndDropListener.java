@@ -12,6 +12,9 @@ public class PiecesDragAndDropListener implements MouseListener
     public Piece piece;
     private Tile tile;
     private Tile originTile;
+    
+    final int WHITE = 0;
+    final int BLACK = 1;
 
     public PiecesDragAndDropListener(Tile tile, Piece piece) 
     {
@@ -31,20 +34,30 @@ public class PiecesDragAndDropListener implements MouseListener
     		
         	setPiece(originTile.getPiece());
         	tile.setPiece(piece);
-			
+
         	originTile.removePiece();
 			originTile.deselect();
-					
-			for(Tile i: originTile.tileOptions)
+			Game.turn = (Game.turn == WHITE) ? BLACK : WHITE;
+			
+	        String turnMessage = Game.turnCheck();
+			Game.txtpnHello.setText(turnMessage + " turn");
+			
+			
+			for(int i = 0; i < 8; i++)
 			{
-				i.isPossibleMove = false;
-				i.isPossibleMove = false;
+				for(int j = 0; j< 8; j++)
+				{
+					Board.boardState[i][j].isPossibleMove = false;
+				}
 			}
         }
     	
     	else if(tile.isPiece())
         {
-        	tile.select();
+        	if(tile.getPiece().getColour() == Game.turn)
+        	{
+        		tile.select();
+        	}
         } 
     }
 
@@ -60,36 +73,11 @@ public class PiecesDragAndDropListener implements MouseListener
 
   
     @Override
-<<<<<<< HEAD
     public void mouseClicked(MouseEvent arg0) {
     	
     }
 
     @Override
-=======
-    public void mouseDragged(MouseEvent evt) 
-    {
-    	System.out.println(evt.getPoint().x);
-        if(this.dragPiece != null)
-        {
-        	if((evt.getPoint().y - this.dragOffsetY) > 100)
-        	{
-        		System.out.println("Yes");
-        	}
-        	this.dragPiece.setX(evt.getPoint().x - this.dragOffsetX);
-            this.dragPiece.setY(evt.getPoint().y - this.dragOffsetY);
-            this.chessGui.repaint();
-        }
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent arg0) {
-    	
-    }
-
-    @Override
->>>>>>> master
     public void mouseEntered(MouseEvent arg0) {}
 
     @Override

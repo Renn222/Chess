@@ -22,7 +22,7 @@ public class Knight extends Piece
 				
 				if(isLegal())
 				{
-					selectTile();
+					highlight();
 				}
 				
 				possY = getY() + n;
@@ -30,7 +30,7 @@ public class Knight extends Piece
 				
 				if(isLegal())
 				{
-					selectTile();
+					highlight();
 				}
 			}
 		}		

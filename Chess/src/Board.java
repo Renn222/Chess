@@ -1,16 +1,8 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Graphics;
+
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Board extends JPanel
@@ -25,23 +17,25 @@ public class Board extends JPanel
     private static final int TYPE_KING = 5;
     private static final int TYPE_PAWN = 6;
 
-    private static final int BOARD_START_X = 53;
-    private static final int BOARD_START_Y = 35;
-
     private static Piece wr01,wr02,br01,br02;
 	private static Piece wk01,wk02,bk01,bk02;
 	private static Piece wb01,wb02,bb01,bb02;
-	private static Piece wk, wq, bk, bq;
+	public static Piece wk;
+	private static Piece wq;
+	public static Piece bk;
+	private static Piece bq;
 	private static Piece [] wp, bp;
 	private static Piece P;
 	
 	public static Tile boardState[][];
     Tile tile;
       
-    private List<Piece> pieces = new ArrayList<Piece>();
+    public static List<Piece> pieces = new ArrayList<Piece>();
 
     public Board()
 	{
+      	this.setLayout(new GridLayout(8, 8, 0, 0));
+
     	
 		wp = new Piece[8];
     	bp = new Piece[8];
@@ -67,8 +61,8 @@ public class Board extends JPanel
 
         wk = new King(WHITE, TYPE_KING);
         wq = new Queen(WHITE, TYPE_QUEEN);
-        bk = new King(BLACK, TYPE_QUEEN);
-        bq = new Queen(BLACK, TYPE_KING);
+        bk = new King(BLACK, TYPE_KING);
+        bq = new Queen(BLACK, TYPE_QUEEN);
         
         // pawns
         for (int x = 0; x < 8; x++)
@@ -138,27 +132,15 @@ public class Board extends JPanel
 	            
 	            tile = new Tile(width, height, P);
 	            this.add(tile);
-	            this.pieces.add(P);
+	            
+	            if(P != null)
+	            {
+	            	pieces.add(P);
+	            }
+
 	            boardState[width][height] = tile;
 	        }
 	    }
-<<<<<<< HEAD
-=======
 	}
-	
-	private Piece createAndAddPiece(int color, int type, int x, int y) 
-	{
-	   	Image img = getImageForPiece(color, type);
-	    Pawn piece = new Pawn(img, x, y);
-	    this.pieces.add(piece);
-	    return piece;
->>>>>>> master
-	}
-    
-    public Tile getTile(int x, int y)
-    {
-    	Tile i = boardState[x][y];
-		return i;
-    }
 }
 
