@@ -16,27 +16,27 @@ import javax.swing.border.EmptyBorder;
 
 public abstract class Piece 
 {
-
     private Image img;
     private int x;
     private int y;
     private int colour;
-    private int type;
+    public int type;
     
 	public int possY;
 	public int possX;
 	public boolean isTherePiece = false;
 	public boolean isFirstMove;
+	static boolean kingTileChecking = false;
 	
     public static final int WHITE = 0;
     public static final int BLACK = 1;
     
     private static final int TYPE_ROOK = 1;
     private static final int TYPE_KNIGHT = 2;
-    private static final int TYPE_BISHOP = 3;
-    private static final int TYPE_QUEEN = 4;
-    private static final int TYPE_KING = 5;
-    private static final int TYPE_PAWN = 6;
+    public static final int TYPE_BISHOP = 3;
+    public static final int TYPE_QUEEN = 4;
+    public static final int TYPE_KING = 5;
+    public static final int TYPE_PAWN = 6;
 
 	List<Tile> tileOptions = new ArrayList<Tile>();
 	Tile possTile;
@@ -141,13 +141,17 @@ public abstract class Piece
         	{
     			possTile = Board.boardState[possX][possY];
     			
+    			if(type == TYPE_KING && kingTiles())
+    			{
+    				return false;
+    			}
+    			
     			if(possTile.isPiece())
     			{
     				isTherePiece = (type == TYPE_KNIGHT || type == TYPE_PAWN) ? false: true;
 
     				if(possTile.getPiece().getColour() == getColour())
     				{
-    					isTherePiece = (type == TYPE_KNIGHT) ? false: true;
     					return false;
     				}
     			}	
@@ -158,11 +162,44 @@ public abstract class Piece
 		return false;
     }
     
+    public boolean kingTiles()
+    {
+    	List<Tile> ddd;
+    	kingTileChecking = true;
+    	Tile kingTile = possTile;
+
+    	for (Piece piece: Board.pieces)
+    	{
+    		
+    		if(piece.type != TYPE_KING && piece.colour != getColour())
+    		{
+    			ddd = piece.getMoves();
+    			
+    			for(Tile d : ddd)
+        		{
+        			if(kingTile == d)
+        			{
+        		    	kingTileChecking = false;
+        				return true;
+        			}
+        		}
+    			
+    			piece.tileOptions.clear();
+    		}
+       	}
+    	kingTileChecking = false;
+
+    	return false;
+    }
+    
     public void highlight()
     {
-    	possTile.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.RED));
+    	if(!kingTileChecking)
+    	{
+        	possTile.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.RED));
+    		possTile.isPossibleMove = true;
+    	}
        	
-		possTile.isPossibleMove = true;
 		tileOptions.add(possTile);
     }
 }

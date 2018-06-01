@@ -18,24 +18,26 @@ public class Pawn extends Piece
 		int distance = 1;
 		isTherePiece = false;
 
-		
-		if(isFirstMove)
+		if(!kingTileChecking)
 		{
-			distance = 2;
-		}
-
-		for(int i = 1; i <= distance; i++)
-		{
-			possY = (getColour() == WHITE) ? getY() - i : getY() + i;
-			possX = getX();
-			
-			if(isLegal() && !possTile.isPiece())
+			if(isFirstMove)
 			{
-				highlight();
-			}	
+				distance = 2;
+			}
+			
+			for(int i = 1; i <= distance; i++)
+			{
+				possY = (getColour() == WHITE) ? getY() - i : getY() + i;
+				possX = getX();
+				
+				if(isLegal() && !possTile.isPiece())
+				{
+					highlight();
+				}	
 
+			}
 		}
-
+		
 		possY = (getColour() == WHITE) ? getY() - 1 : getY() + 1;
 		
 		for(int i = - 1; i <= 1; i += 2)
@@ -51,7 +53,7 @@ public class Pawn extends Piece
 				}
 			}			
 		}
-		
+
 		isTherePiece = false;
 		return tileOptions;
 	}

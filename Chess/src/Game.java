@@ -5,7 +5,9 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+
 import java.awt.Color;
+import java.util.List;
 
 
 public class Game 
@@ -59,5 +61,10 @@ public class Game
         String turnMessage = (turn == WHITE) ? "White's" : "Black's";
         
         return turnMessage;
+	}
+	
+	public static void gameOver()
+	{
+		
 	}
 }

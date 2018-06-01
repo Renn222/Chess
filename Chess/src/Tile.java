@@ -19,7 +19,6 @@ public class Tile extends JPanel implements Cloneable
 	private Piece piece;
 	int x,y;                             //is public because this is to be accessed by all the other class
 	public boolean isSelected = false;
-	private boolean ischeck = false;
 	public List<Tile> tileOptions = new ArrayList<Tile>();
 	PiecesDragAndDropListener listener;
 	
@@ -73,11 +72,9 @@ public class Tile extends JPanel implements Cloneable
 	{
 		piece.isFirstMove = false;
 		
-		{
-			piece = null;
-			listener.piece = null;
-			this.remove(content);
-		}
+		piece = null;
+		listener.piece = null;
+		this.remove(content);
 	}
 	public boolean isPiece()
 	{
@@ -107,8 +104,7 @@ public class Tile extends JPanel implements Cloneable
 			{
 				i.listener.setOriginTile(this);
 			}
-		}
-		
+		}	
 	}
 	
 	public void deselect()
@@ -129,7 +125,6 @@ public class Tile extends JPanel implements Cloneable
 		
 		for(Tile i: tileOptions)
 		{
-			i.isPossibleMove = false;
 			i.isPossibleMove = false;
 		}
 		

@@ -12,17 +12,20 @@ public class King extends Piece
 	{
 		possY = getY() + 1;
 		possX = getX();
-
+	
+		
 		if(isLegal())
 		{
 			highlight();
 		}
+		
 		isTherePiece = false;
 
 		
 		possY = getY() - 1;
 		possX = getX();
-
+	
+		
 		if(isLegal())
 		{
 			highlight();
@@ -32,6 +35,7 @@ public class King extends Piece
 		
 		possY = getY();
 		possX = getX() + 1;
+		
 
 		if(isLegal())
 		{
@@ -42,6 +46,7 @@ public class King extends Piece
 		
 		possY = getY();
 		possX = getX() - 1;
+	
 		
 		if(isLegal())
 		{
@@ -52,6 +57,8 @@ public class King extends Piece
 		
 		possY = getY() + 1;
 		possX = getX() + 1;
+		
+	
 
 		if(isLegal())
 		{
@@ -63,6 +70,7 @@ public class King extends Piece
 		possY = getY() - 1;
 		possX = getX() - 1;
 		
+		
 		if(isLegal())
 		{
 			highlight();
@@ -72,6 +80,8 @@ public class King extends Piece
 		
 		possY = getY() - 1;
 		possX = getX() + 1;
+		
+	
 		
 		if(isLegal())
 		{
@@ -83,11 +93,15 @@ public class King extends Piece
 		possY = getY() + 1;
 		possX = getX() - 1;
 		
+		
+		
 		if(isLegal())
 		{
 			highlight();
 		}
 		isTherePiece = false;
+		
+		Piece.kingTileChecking = false;
 
 		return tileOptions;
 	}

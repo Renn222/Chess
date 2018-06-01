@@ -8,6 +8,7 @@ public class Bishop extends Piece
 		super(colour, type);
 	}
 	
+	@Override
 	public List<Tile> getMoves()
 	{
 		for(int i = 1; getY() + i <= 8; i++)

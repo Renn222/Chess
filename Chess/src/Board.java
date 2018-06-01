@@ -17,20 +17,20 @@ public class Board extends JPanel
     private static final int TYPE_KING = 5;
     private static final int TYPE_PAWN = 6;
 
-    private static final int BOARD_START_X = 53;
-    private static final int BOARD_START_Y = 35;
-
     private static Piece wr01,wr02,br01,br02;
 	private static Piece wk01,wk02,bk01,bk02;
 	private static Piece wb01,wb02,bb01,bb02;
-	private static Piece wk, wq, bk, bq;
+	public static Piece wk;
+	private static Piece wq;
+	public static Piece bk;
+	private static Piece bq;
 	private static Piece [] wp, bp;
 	private static Piece P;
 	
 	public static Tile boardState[][];
     Tile tile;
       
-    private List<Piece> pieces = new ArrayList<Piece>();
+    public static List<Piece> pieces = new ArrayList<Piece>();
 
     public Board()
 	{
@@ -132,16 +132,15 @@ public class Board extends JPanel
 	            
 	            tile = new Tile(width, height, P);
 	            this.add(tile);
-	            this.pieces.add(P);
+	            
+	            if(P != null)
+	            {
+	            	pieces.add(P);
+	            }
+
 	            boardState[width][height] = tile;
 	        }
 	    }
 	}
-    
-    public Tile getTile(int x, int y)
-    {
-    	Tile i = boardState[x][y];
-		return i;
-    }
 }
 
