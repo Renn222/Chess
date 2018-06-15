@@ -21,6 +21,7 @@ public abstract class Piece
     private int y;
     private int colour;
     public int type;
+    public Tile tile;
     
 	public int possY;
 	public int possX;
@@ -101,6 +102,16 @@ public abstract class Piece
     	return colour;
     }
     
+    public void setTile(Tile currentTile)
+    {
+    	tile = currentTile;
+    }
+    
+    public Tile getTile()
+    {
+    	return tile;
+    }
+    
     private Image getImageForPiece(int colour) 
     {
         String filename = "";
@@ -140,6 +151,10 @@ public abstract class Piece
     		if((possY >= 0 && possY <= 7) && (possX >= 0 && possX <= 7))
         	{
     			possTile = Board.boardState[possX][possY];
+    			if(Board.check && type != TYPE_KING && !Board.beingChecked)
+    			{
+    				isStillCheck();
+    			}
     			
     			if(type == TYPE_KING && kingTiles())
     			{
@@ -170,7 +185,6 @@ public abstract class Piece
 
     	for (Piece piece: Board.pieces)
     	{
-    		
     		if(piece.type != TYPE_KING && piece.colour != getColour())
     		{
     			ddd = piece.getMoves();
@@ -178,9 +192,9 @@ public abstract class Piece
     			for(Tile d : ddd)
         		{
         			if(kingTile == d)
-        			{
+        			{	
         		    	kingTileChecking = false;
-        				return true;
+           				return true;
         			}
         		}
     			
@@ -188,14 +202,31 @@ public abstract class Piece
     		}
        	}
     	kingTileChecking = false;
-
     	return false;
+    }
+    
+    public boolean isStillCheck()
+    {
+    	possTile.setPiece(this);
+    	Board.checkCheck();
+    	
+    	if(Board.check)
+    	{
+    		possTile.removePiece();
+    		return false;
+    	}
+    	return true;
     }
     
     public void highlight()
     {
-    	if(!kingTileChecking)
-    	{
+		if(type == TYPE_KING)
+		{
+			System.out.println(Board.beingChecked + " " + kingTileChecking);
+		}
+
+    	if(!kingTileChecking && !Board.beingChecked)
+    	{	
         	possTile.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.RED));
     		possTile.isPossibleMove = true;
     	}

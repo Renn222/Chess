@@ -17,9 +17,8 @@ public class Pawn extends Piece
 	{
 		int distance = 1;
 		isTherePiece = false;
-
 		if(!kingTileChecking)
-		{
+		{	
 			if(isFirstMove)
 			{
 				distance = 2;
@@ -46,11 +45,18 @@ public class Pawn extends Piece
 
 			if(isLegal())
 			{
-
-				if(possTile.isPiece() && possTile.getPiece().getColour() != getColour())
+				if(!kingTileChecking)
+				{
+					if(possTile.isPiece() && possTile.getPiece().getColour() != getColour())
+					{
+						highlight();
+					}
+				}
+				else
 				{
 					highlight();
 				}
+				
 			}			
 		}
 

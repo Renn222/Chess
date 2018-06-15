@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class Board extends JPanel
     private static final int TYPE_QUEEN = 4;
     private static final int TYPE_KING = 5;
     private static final int TYPE_PAWN = 6;
-
+    
     private static Piece wr01,wr02,br01,br02;
 	private static Piece wk01,wk02,bk01,bk02;
 	private static Piece wb01,wb02,bb01,bb02;
@@ -28,7 +29,9 @@ public class Board extends JPanel
 	private static Piece P;
 	
 	public static Tile boardState[][];
-    Tile tile;
+    public Tile tile;
+    public static boolean beingChecked = false;
+	static boolean check = false;
       
     public static List<Piece> pieces = new ArrayList<Piece>();
 
@@ -42,7 +45,6 @@ public class Board extends JPanel
         
     	
     	// create and place pieces
-        //
         // rook, knight, bishop, queen, king, bishop, knight, and rook
 	    wr01 = new Rook(WHITE, TYPE_ROOK);
         wr02 = new Rook(WHITE, TYPE_ROOK);
@@ -65,21 +67,21 @@ public class Board extends JPanel
         bq = new Queen(BLACK, TYPE_QUEEN);
         
         // pawns
-        for (int x = 0; x < 8; x++)
+        for(int x = 0; x < 8; x++)
         {
             wp[x] = new Pawn(WHITE, TYPE_PAWN);
         }
 
-        for (int x = 0; x < 8; x++) 
+        for(int x = 0; x < 8; x++) 
         {
             bp[x] = new Pawn(BLACK, TYPE_PAWN);
         }
         
         boardState = new Tile[8][8];
         
-	    for (int height = 0; height < 8; height++)
+	    for(int height = 0; height < 8; height++)
 	    {
-	        for (int width = 0; width < 8; width++) 
+	        for(int width = 0; width < 8; width++) 
 	        {
 	            P = null;
 	            // rooks
@@ -142,5 +144,32 @@ public class Board extends JPanel
 	        }
 	    }
 	}
+    
+    static void checkCheck()
+    {
+    	Piece king = (Game.turn == WHITE) ? wk : bk;
+    	Tile kingTile = king.getTile();
+    	
+    	
+    	for (Piece piece: Board.pieces)
+    	{
+        	beingChecked = true;
+        	
+			List<Tile> ddd = piece.getMoves();
+			for(Tile d : ddd)
+    		{
+    			if(kingTile == d)
+    			{	
+    				beingChecked = false;
+    				check = true;
+    				kingTile.setBackground(new Color(255,0,0));
+    				break;
+    			}
+    		}
+			beingChecked = false;
+
+			piece.tileOptions.clear();
+       	}
+    }
 }
 
