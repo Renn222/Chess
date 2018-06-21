@@ -151,9 +151,10 @@ public abstract class Piece
     		if((possY >= 0 && possY <= 7) && (possX >= 0 && possX <= 7))
         	{
     			possTile = Board.boardState[possX][possY];
+    			
     			if(Board.check && type != TYPE_KING && !Board.beingChecked)
     			{
-    				isStillCheck();
+    				//isStillCheck();
     			}
     			
     			if(type == TYPE_KING && kingTiles())
@@ -182,9 +183,11 @@ public abstract class Piece
     	List<Tile> ddd;
     	kingTileChecking = true;
     	Tile kingTile = possTile;
+    	int count = 0; 
 
     	for (Piece piece: Board.pieces)
     	{
+    		
     		if(piece.type != TYPE_KING && piece.colour != getColour())
     		{
     			ddd = piece.getMoves();
@@ -200,12 +203,14 @@ public abstract class Piece
     			
     			piece.tileOptions.clear();
     		}
+    		
+    		if(count)
        	}
     	kingTileChecking = false;
     	return false;
     }
     
-    public boolean isStillCheck()
+    /*public boolean isStillCheck()
     {
     	possTile.setPiece(this);
     	Board.checkCheck();
@@ -216,15 +221,10 @@ public abstract class Piece
     		return false;
     	}
     	return true;
-    }
+    }*/
     
     public void highlight()
     {
-		if(type == TYPE_KING)
-		{
-			System.out.println(Board.beingChecked + " " + kingTileChecking);
-		}
-
     	if(!kingTileChecking && !Board.beingChecked)
     	{	
         	possTile.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.RED));

@@ -150,12 +150,12 @@ public class Board extends JPanel
     	Piece king = (Game.turn == WHITE) ? wk : bk;
     	Tile kingTile = king.getTile();
     	
-    	
     	for (Piece piece: Board.pieces)
     	{
         	beingChecked = true;
         	
 			List<Tile> ddd = piece.getMoves();
+			
 			for(Tile d : ddd)
     		{
     			if(kingTile == d)

@@ -29,16 +29,18 @@ public class PiecesDragAndDropListener implements MouseListener
         {
     		if(tile.isPiece())
     		{
+    			Board.pieces.remove(piece);
     			tile.removePiece();
     		}
     		
         	setPiece(originTile.getPiece());
         	tile.setPiece(piece);
-
+        	this.setPiece(piece);
+        	
         	originTile.removePiece();
+			//Board.checkCheck();
 			originTile.deselect();
 			Game.turn = (Game.turn == WHITE) ? BLACK : WHITE;
-			Board.checkCheck();
 			
 	        String turnMessage = Game.turnCheck();
 			Game.txtpnHello.setText(turnMessage + " turn");
