@@ -25,6 +25,13 @@ public class Tile extends JPanel implements Cloneable
 	int colour;
 	private static final int WHITE = 0;
     private static final int BLACK = 1;
+    
+    private static final int TYPE_ROOK = 1;
+    private static final int TYPE_KNIGHT = 2;
+    private static final int TYPE_BISHOP = 3;
+    private static final int TYPE_QUEEN = 4;
+    private static final int TYPE_KING = 5;
+    private static final int TYPE_PAWN = 6;
 
 	public Tile(int x, int y, Piece p)
 	{		
@@ -35,7 +42,7 @@ public class Tile extends JPanel implements Cloneable
 		
 		setLayout(new BorderLayout());
 	
-		if((x + y) % 2 == 0)
+		if((this.x + this.y) % 2 == 0)
 		{
 			setBackground(new Color(128, 128, 128));
 			colour = BLACK;
@@ -62,6 +69,7 @@ public class Tile extends JPanel implements Cloneable
 		piece = p;
 		piece.setX(x);
 		piece.setY(y);
+		piece.setTile(this);
 		
 		ImageIcon img = piece.getImageIcon();
 		content = new JLabel(img);
@@ -99,7 +107,6 @@ public class Tile extends JPanel implements Cloneable
 			Game.isAnySelected = true;
 			
 			tileOptions = piece.getMoves();
-			
 			for(Tile i: tileOptions)
 			{
 				i.listener.setOriginTile(this);
@@ -118,14 +125,19 @@ public class Tile extends JPanel implements Cloneable
 			setBackground(Color.white);
 		}
 		
-		for(Tile x: tileOptions)
+		if(Board.check && piece.type == TYPE_KING)
 		{
-			x.setBorder(null);
+			setBackground(new Color(255,0,0));
 		}
 		
 		for(Tile i: tileOptions)
 		{
-			i.isPossibleMove = false;
+			i.setBorder(null);
+		}
+		
+		for(Tile d: tileOptions)
+		{
+			d.isPossibleMove = false;
 		}
 		
 		isSelected = false;	
@@ -135,5 +147,15 @@ public class Tile extends JPanel implements Cloneable
 	public Piece getPiece() 
 	{
 		return piece;
+	}
+	
+	public int getTileX()
+	{
+		return x;
+	}
+	
+	public int getTileY()
+	{
+		return y;
 	}
 }

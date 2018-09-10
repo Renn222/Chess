@@ -1,8 +1,8 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece
 {
-
 	public King(int colour, int type) 
 	{
 		super(colour, type);
@@ -101,7 +101,12 @@ public class King extends Piece
 		}
 		isTherePiece = false;
 		
-		Piece.kingTileChecking = false;
+		if(tileOptions.size() == 0 && this.type == TYPE_KING)
+		{
+			Game.gameOver();
+		}
+		
+		kingTileChecking = false;	
 
 		return tileOptions;
 	}

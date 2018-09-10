@@ -3,6 +3,7 @@ import java.awt.Container;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
@@ -18,12 +19,11 @@ public class Game
     final static int BLACK = 1;
     static int turn;
     static JTextPane txtpnHello = new JTextPane();
-
+	static JFrame f = new JFrame();
     
     public static boolean isAnySelected = false;
     public Game()
     {
-    	JFrame f = new JFrame();
     	f.setResizable(true);
         f.setSize(800, 800);
         f.setTitle("Chess");
@@ -65,6 +65,11 @@ public class Game
 	
 	public static void gameOver()
 	{
-		
+		if(Board.check)
+		{
+			String turnWin = (turn == WHITE) ? "White" : "Black";
+			JOptionPane.showMessageDialog(f, turnWin + " Wins", "Game Over", JOptionPane.PLAIN_MESSAGE);
+			System.exit(0);
+		}
 	}
 }
